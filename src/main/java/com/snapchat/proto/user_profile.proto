@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package com.snapchat.targeting.proto;
+
+option java_outer_classname = "UserProfileProto";
+
+
+// next one is 27
+message UserProfile {
+  int64 latest_timestamp_millis = 8;
+  // The following three ids are not persisted in BT and it's used for joining only!
+  string user_id = 7;
+  string user_name = 11;
+  string ghost_id = 21;
+  string said = 16;
+  map<string, string> supplement = 17;
+  repeated int64 installed_hashed_app_ids = 23;
+ }
+
+message UserProfileHistory {
+  // latest: demographics, app_profile, audience_segments, community
+  // historical: attribution
+  map<string, UserProfile> profiles = 1;
+  string user_id = 2;
+}

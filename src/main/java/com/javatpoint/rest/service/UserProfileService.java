@@ -1,6 +1,6 @@
 package com.javatpoint.rest.service;
 
-import com.javatpoint.rest.entity.UserProfile;
+import com.javatpoint.rest.entity.UserProfilePOJO;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -15,6 +15,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import com.snapchat.targeting.proto.UserProfileProto.UserProfile;
+import javax.ws.rs.core.Response;
 
 @Path("/profile")
 public class UserProfileService {
@@ -31,14 +33,14 @@ public class UserProfileService {
   @Produces({
     MediaType.APPLICATION_JSON
   }) // add MediaType.APPLICATION_XML if you want XML as well (don't forget @XmlRootElement)
-  public List<UserProfile> getAllProfiles() throws Exception {
+  public List<UserProfilePOJO> getAllProfiles() throws Exception {
 
-    List<UserProfile> UserProfiles = new ArrayList<>();
+    List<UserProfilePOJO> UserProfiles = new ArrayList<>();
     Date date = new Date();
     LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
     int day = localDate.getDayOfMonth();
-    UserProfile m = new UserProfile();
+    UserProfilePOJO m = new UserProfilePOJO();
     Map<String, Object> creditCards = new HashMap<String, Object>();
     creditCards.put("MasterCard", "1234 1234 1234 1234");
     creditCards.put("Visa", "1234 1234 1234 1234");
@@ -64,10 +66,22 @@ public class UserProfileService {
   @Consumes({MediaType.APPLICATION_JSON})
   @Produces({MediaType.APPLICATION_JSON})
   @Path("/post")
-  public String postUserProfile(UserProfile msg) throws Exception {
+  public String postUserProfile(UserProfilePOJO msg) throws Exception {
+    //Add a user profile to memory
 
     System.out.println("First Name = " + msg.getFirstName());
     System.out.println("Last Name  = " + msg.getLastName());
+    //return userProfile.build();
+    return "{'code':200,'message' : 'Success'}";
+  }
+
+  @GET
+  @Consumes({MediaType.APPLICATION_JSON})
+  @Produces({MediaType.APPLICATION_JSON})
+  @Path("/get_proto")
+  public String getUserProfileProto(int user_id) throws Exception {
+
+    System.out.println("Calling getUserProfileProto for user id " + user_id);
 
     return "{'code':200,'message' : 'Success'}";
   }
