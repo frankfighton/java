@@ -23,6 +23,10 @@ public class ApplicationConfig extends Application {
     resources.add(org.glassfish.jersey.jackson.JacksonFeature.class);
     //we could also use this:
     //resources.add(com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider.class);
+    //resources.add(com.services.rest.providor.ProtobufMessageWriter.class);
+    //resources.add(com.services.rest.providor.ProtobufMessageReader.class);
+    //You can have one provider to implement two interfaces or two separate providers
+    resources.add(com.services.rest.providor.ProtobufferProvider.class);
 
     //instead let's do it manually:
     resources.add(com.services.rest.providor.MyJacksonJsonProvider.class);

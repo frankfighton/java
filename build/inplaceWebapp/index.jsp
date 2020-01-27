@@ -394,7 +394,7 @@
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
               <div class="card-body">
-                <button class="btn btn-success" data-url="/service/profile/get_proto" data-method="GET">
+                <button class="btn btn-success" data-url="/service/profile/get_proto" data-method="GET" data-payload="user_id=2">
                   <span class="text">Get User Profile Proto</span>
                 </button>
               </div>
@@ -477,12 +477,8 @@
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
 
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+
 <script>
             var ctxPath = "<%=request.getContextPath() %>";
             $(function(){

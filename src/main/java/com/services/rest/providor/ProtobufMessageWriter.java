@@ -1,5 +1,6 @@
 package com.services.rest.providor;
 
+import com.services.rest.providor.AlternateMediaType;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;

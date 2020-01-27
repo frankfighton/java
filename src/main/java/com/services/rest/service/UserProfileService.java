@@ -15,6 +15,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -77,16 +78,14 @@ public class UserProfileService {
   }
 
   @GET
-  @Consumes({AlternateMediaType.APPLICATION_XPROTOBUF})
   @Produces({AlternateMediaType.APPLICATION_XPROTOBUF})
   @Path("/get_proto")
-  public UserProfile getUserProfileProto(int user_id) throws Exception {
+  public UserProfile getUserProfileProto(@PathParam("user_id") int user_id) throws Exception {
 
     System.out.println("Calling getUserProfileProto for user id " + user_id);
     return this.createUserProfile();
     //return "{'code':200,'message' : 'Success'}";
   }
-
 
   public UserProfile createUserProfile() {
     UserProfile.Builder userProfile = UserProfile.newBuilder();

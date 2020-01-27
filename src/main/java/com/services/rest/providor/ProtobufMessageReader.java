@@ -3,6 +3,7 @@ package com.services.rest.providor;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.Message;
 import com.google.protobuf.Type;
+import com.services.rest.providor.AlternateMediaType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;

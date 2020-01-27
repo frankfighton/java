@@ -1,15 +1,20 @@
 package com.chat.api;
 
+import com.chat.targeting.proto.UserProfileProto;
 import com.chat.targeting.proto.UserProfileProto.UserProfile;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.services.rest.providor.AlternateMediaType;
+import com.services.rest.providor.ProtobufMessageReader;
+import com.services.rest.providor.ProtobufMessageWriter;
+import com.services.rest.providor.ProtobufferProvider;
 import com.services.rest.service.UserProfileService;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 import com.services.restclient.ClientTest;
 
@@ -23,8 +28,6 @@ public class Tester {
     System.out.println(obj);
     System.out.println();
   }
-
-
 
   public static void testDirectFunctionCall() throws IOException {
     UserProfileService profileService = new UserProfileService();
@@ -43,18 +46,25 @@ public class Tester {
     debug(userProfile);
   }
 
-  public static void testAPICall() {
-    ClientConfig config = new ClientConfig();
-    Client client = ClientBuilder.newClient(config);
+  public static void testAPICall() throws InvalidProtocolBufferException {
+    Client client = ClientBuilder.newBuilder().register(new ProtobufferProvider()).build();
+
+
     WebTarget target = client.target(ClientTest.getBaseURI());
 
-    System.out.println(
+    Response response =
         target
-            .path("rest")
-            .path("hello")
+            .path("service")
+            .path("profile")
+            .path("get_proto")
             .request()
-            .accept(MediaType.APPLICATION_JSON)
-            .get(String.class));
+            .accept(AlternateMediaType.APPLICATION_XPROTOBUF)
+            .get();
+    System.out.println("The response is ");
+    byte[] profileStr = response.readEntity(byte[].class);
+    UserProfile userProfile = UserProfile.parseFrom(profileStr);
+    System.out.println("UserName = " + userProfile.getUserName());
+    System.out.println("UserID = " + userProfile.getUserId());
   }
 
   public static void main(String[] args) throws IOException {
